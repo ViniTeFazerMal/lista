@@ -1,0 +1,73 @@
+const prompt = require('prompt-sync')();
+
+class Node {
+    constructor(valor) {
+        this.valor = valor;
+        this.proximo = null;
+        this.anterior = null;
+    }
+}
+
+class DoublyLinkedList {
+    constructor() {
+        this.head = null;
+    }
+
+    inserirInicio(valor) {
+        const novo = new Node(valor);
+        if (this.head) {
+            novo.proximo = this.head;
+            this.head.anterior = novo;
+        }
+        this.head = novo;
+        console.log(`Elemento ${valor} inserido no início da lista.`);
+    }
+
+    inserirFim(valor) {
+        const novo = new Node(valor);
+        if (!this.head) {
+            this.head = novo;
+        } else {
+            let aux = this.head;
+            while (aux.proximo) {
+                aux = aux.proximo;
+            }
+            aux.proximo = novo;
+            novo.anterior = aux;
+            console.log(`Elemento ${valor} inserido no final da lista.`);
+        }
+    }
+    limparLista() {
+        this.head = null;
+        console.log("Lista limpa.");
+    }
+}
+
+const lista = new DoublyLinkedList();
+
+while (true) {
+    console.log("\n0 - Sair\n1 - Inserir no início\n2 - Inserir no fim\n3 - Inserir no meio\n4 - Inserir ordenado\n5 - Remover\n6 - Imprimir do início ao fim\n7 - Imprimir do fim ao início\n8 - Buscar\n9 - Limpar lista\n");
+    const opcao = parseInt(prompt("Opção: "));
+
+    switch (opcao) {
+        case 1:
+            const valorInicio = parseInt(prompt("Digite o valor a ser inserido no início: "));
+            lista.inserirInicio(valorInicio);
+            break;
+        case 2:
+            const valorFim = parseInt(prompt("Digite o valor a ser inserido no fim: "));
+            lista.inserirFim(valorFim);
+            break;
+        case 9:
+            lista.limparLista();
+            break;
+        case 0:
+            console.log("Saindo...");
+            process.exit(0);
+            break;
+
+        default:
+            console.log("Opção inválida. Tente novamente.");
+            break;
+    }
+}
